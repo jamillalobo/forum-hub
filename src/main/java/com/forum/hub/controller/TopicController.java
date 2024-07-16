@@ -1,6 +1,7 @@
 package com.forum.hub.controller;
 
 import com.forum.hub.domain.topic.*;
+import com.forum.hub.domain.topic.validations.TopicValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("topics")
@@ -24,8 +27,6 @@ public class TopicController {
         repository.save(topic);
         var uri = uriBuilder.path("/topics/{id}").buildAndExpand(topic.getId()).toUri();
         return ResponseEntity.created(uri).body(new DetailTopicData(topic));
-
-
     }
 
     @GetMapping
